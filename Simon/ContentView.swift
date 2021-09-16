@@ -17,19 +17,37 @@ struct ContentView: View {
                 .font(.system(size: 72))
                 .padding()
             HStack {
-            colorDisplay[0]
-                .opacity(flash[0] ? 1: 0.4)
-                .padding()
+                colorDisplay[0]
+                    .opacity(flash[0] ? 1: 0.4)
+                    .onTapGesture {
+                        flashColorDisplay(index: 0)
+                    }
+                    .padding()
                 colorDisplay[1]
                     .opacity(flash[1] ? 1 : 0.4)
+                    .onTapGesture {
+                        flashColorDisplay(index: 1)
+                    }
             }
             HStack {
                 colorDisplay[2]
                     .opacity(flash[2] ? 1: 0.4)
+                    .onTapGesture {
+                        flashColorDisplay(index: 2)
+                    }
                     .padding()
                 colorDisplay[3]
                     .opacity(flash[3] ? 1: 0.4)
+                    .onTapGesture {
+                        flashColorDisplay(index: 3)
+                    }
             }
+        }
+    }
+    func flashColorDisplay(index: Int) {
+        flash[index].toggle()
+        withAnimation(.easeInOut(duration: 0.5)) {
+            flash[index].toggle()
         }
     }
 }
