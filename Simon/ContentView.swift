@@ -10,11 +10,22 @@ import SwiftUI
 struct ContentView: View {
     @State private var colorDisplay = [ColorDisplay(color: .green), ColorDisplay(color: .red), ColorDisplay(color: .yellow), ColorDisplay(color: .blue)]
     var body: some View {
-        Text("Simon")
-            .preferredColorScheme(.dark)
-            .font(.system(size: 72))
-            .offset(x: 0, y: -275.0)
-            .padding()
+        VStack {
+            Text("Simon")
+                .preferredColorScheme(.dark)
+                .font(.system(size: 72))
+                .padding()
+            HStack {
+            colorDisplay[0]
+                .padding()
+                colorDisplay[1]
+            }
+            HStack {
+                colorDisplay[2]
+                    .padding()
+                colorDisplay[3]
+            }
+        }
     }
 }
 
