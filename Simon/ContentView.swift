@@ -7,6 +7,7 @@
 //test
 
 import SwiftUI
+import AVFoundation
 
 struct ContentView: View {
     @State private var timer = Timer.publish(every: 0.5, on: .main, in: .common).autoconnect()
@@ -14,6 +15,7 @@ struct ContentView: View {
     @State private var flash = [false, false, false, false]
     @State private var sequence: [Int] = []
     @State private var index = 0
+    @State var audioPlayer: AVAudioPlayer!
     var body: some View {
         VStack {
             Text("Simon")
@@ -24,12 +26,14 @@ struct ContentView: View {
                     .opacity(flash[0] ? 1: 0.4)
                     .onTapGesture {
                         flashColorDisplay(index: 0)
+                        playSounds(name: "0")
                     }
                     .padding()
                 colorDisplay[1]
                     .opacity(flash[1] ? 1 : 0.4)
                     .onTapGesture {
                         flashColorDisplay(index: 1)
+                        playSounds(name: "1")
                     }
             }
             HStack {
@@ -37,12 +41,14 @@ struct ContentView: View {
                     .opacity(flash[2] ? 1: 0.4)
                     .onTapGesture {
                         flashColorDisplay(index: 2)
+                        playSounds(name: "2")
                     }
                     .padding()
                 colorDisplay[3]
                     .opacity(flash[3] ? 1: 0.4)
                     .onTapGesture {
                         flashColorDisplay(index: 3)
+                        playSounds(name: "3")
                     }
             }
         }
@@ -63,7 +69,19 @@ struct ContentView: View {
         withAnimation(.easeInOut(duration: 0.5)) {
             flash[index].toggle()
         }
-}
+    }
+    func playSounds(name: String)
+    {
+        if let audioURL = Bundle.main.url(forResource: name, withExtension: "wav") {
+            do {
+                try self.audioPlayer = AVAudioPlayer(contentsOf: audioURL)
+                self.audioPlayer?.prepareToPlay()
+                self.audioPlayer?.play()
+            } catch {
+                print("couldn't play audio. Error: \(error)")
+            }
+        }
+    }
 }
 struct ColorDisplay: View {
     let color: Color
